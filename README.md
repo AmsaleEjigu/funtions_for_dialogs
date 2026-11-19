@@ -1,6 +1,5 @@
 # funtions_for_dialogs
 
-R-Instat helper functions
 Small R functions for presenting survey results with ggplot2, written to be used in R-Instat's script window. They only need ggplot2, which R-Instat already has.
 
 File	Function	What it does
