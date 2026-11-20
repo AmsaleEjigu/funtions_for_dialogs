@@ -23,7 +23,7 @@
 
 legend_n <- function(data, var, answered = NULL,
                      colours = NULL, rename = NULL, order = NULL,
-                     position = c("top", "bottom", "right", "left"),
+                     position = c("bottom","top", "right", "left"),
                      aesthetic = "fill", key_size = 0.3, text_size = 10) {
   position <- match.arg(position)
   in_row <- position %in% c("top", "bottom")
@@ -87,7 +87,7 @@ legend_n <- function(data, var, answered = NULL,
   if (is.null(colours)) {
     # Up to 6 groups: a fixed set. More groups: evenly spaced colours from
     # the "Dark 3" palette, so every group gets its own colour.
-    base <- c("#1F4E79", "#ED7D31", "#7F7F7F", "#FFC000", "#5B9BD5", "#70AD47")
+    base <- c( "#ED7D31", "#1F4E79","#7F7F7F", "#FFC000", "#5B9BD5", "#70AD47")
     colours <- if (k <= length(base)) base[seq_len(k)]
                else grDevices::hcl.colors(k, palette = "Dark 3")
     colours <- stats::setNames(colours, groups)
