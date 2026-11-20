@@ -92,4 +92,4 @@ grep("Crops|Livestock|Livelihood", names(survey), value = TRUE)
 ## Notes
 
 - Works best with 2 or 3 questions. For 4 or more, an UpSet plot is easier to read.
-- This repository holds code only. Don't upload survey data.
+
