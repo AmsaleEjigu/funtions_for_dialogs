@@ -5,7 +5,7 @@ venn_data <- survey[stats::complete.cases(survey[cols]), cols]
 venn_data <- as.data.frame(lapply(venn_data, function(x) as.character(x) %in% c("Yes", "TRUE", "1")))
 names(venn_data) <- c("Crops", "Livestock", "Livelihood")
 
-last_graph <- ggvenn::ggvenn(venn_data, show_percentage = TRUE, fill_color = c("#E66101","#2C7FB8","#5E3C99"),digits=0, stroke_size = 0.8, set_name_size = 5, text_size = 4) +
+last_graph <- ggvenn::ggvenn(venn_data, show_percentage = TRUE, digits=0, fill_color = c("#E66101","#2C7FB8","#5E3C99"), stroke_size = 0.8, set_name_size = 5, text_size = 4) +
   ggplot2::labs(title = " ", caption = paste0("n = ", nrow(venn_data), " "))
 
 data_book$add_object(data_name = "survey", object_name = "last_graph", object_type_label = "graph", object_format = "image", object = instatExtras::check_graph(graph_object = last_graph))
