@@ -1,27 +1,18 @@
 pyramid_data <- transform(subset(data_book$get_data_frame(data_name = "survey"), !is.na(age) & !is.na(gender)), age = as.numeric(age), gender = factor(gender, levels = c("female", "male")))
 
 last_graph <- ggplot2::ggplot(pyramid_data, ggplot2::aes(y = age, fill = gender)) +
-  # one histogram per gender; female (the first level) is made negative to go left
-ggplot2::geom_histogram(ggplot2::aes(x = ggplot2::after_stat(ifelse(group == 1, -count, count))),
-binwidth = 5, boundary = 0, closed = "left",   # bands like [20, 25)
-colour = "white", linewidth = 0.2, na.rm = TRUE) +
+
+  ggplot2::geom_histogram(ggplot2::aes(x = ggplot2::after_stat(ifelse(group == 1, -count, count))), binwidth = 5, boundary = 0, closed = "left",  colour = "white", linewidth = 0.2, na.rm = TRUE) +
   ggplot2::geom_vline(xintercept = 0, colour = "grey20") +
-  # group names above each half of the chart
   ggplot2::annotation_custom(grid::textGrob("female", x = 0.25, y = 0.95, gp = grid::gpar(fontsize = 10))) +
-  ggplot2::annotation_custom(grid::textGrob("male",   x = 0.75, y = 0.95, gp = grid::gpar(fontsize = 10))) +
-  lemon::scale_x_symmetric(labels = abs) +                       # same width both sides, no minus signs
-  ggplot2::scale_y_continuous(limits = c(0, NA), breaks = seq(0, 120, 20),
-  expand = ggplot2::expansion(mult = c(0.02, 0.12)),   # room for the labels
-  sec.axis = ggplot2::dup_axis()) +                   # age on both sides
+  ggplot2::annotation_custom(grid::textGrob("male",   x = 0.75, y = 0.95, gp = grid::gpar(fontsize = 10))) + lemon::scale_x_symmetric(labels = abs) +                       
+  ggplot2::scale_y_continuous(limits = c(15, NA), breaks = seq(15, 120, 20), expand = ggplot2::expansion(mult = c(0.02, 0.12)), sec.axis = ggplot2::dup_axis()) +                 
   ggplot2::scale_fill_manual(values = c(female = "#F8766D", male = "#00BFC4"), guide = "none") +
-  ggplot2::labs(title = " ", x = NULL, y = " ") +
+  ggplot2::labs(x = NULL, title=" ") +                     
   ggplot2::theme_minimal(base_size = 11) +
-  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold", hjust = 0.5),
-  axis.title.y = ggplot2::element_text(face = "bold"),
-  panel.grid.major.y = ggplot2::element_line(colour = "grey88", linewidth = 0.3),   # faded age lines
-panel.grid.major.x = ggplot2::element_blank(),                                    # no vertical lines,
-panel.grid.minor = ggplot2::element_blank(),
-panel.border = ggplot2::element_rect(colour = "grey60", fill = NA))
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold", hjust = 0.5), axis.title.y = ggplot2::element_text(face = "bold"), panel.grid.major.y = ggplot2::element_line(colour = "grey88", linewidth = 0.3), panel.grid.major.x = ggplot2::element_blank(),                                    
+  panel.grid.minor = ggplot2::element_blank(), panel.border = ggplot2::element_rect(colour = "grey60", fill = NA)) 
+#last_graph <- last_graph + ggplot2::labs(title = rlang::as_label(last_graph$mapping$fill))   
 
 data_book$add_object(data_name = "survey", object_name = "last_graph", object_type_label = "graph", object_format = "image", object = instatExtras::check_graph(graph_object = last_graph))
 data_book$get_object_data(data_name = "survey", object_name = "last_graph", as_file = TRUE)
